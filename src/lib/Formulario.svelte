@@ -39,24 +39,21 @@
   }
 
   function removeCusto(event) {
-    custosExtras = custosExtras.filter((custo) => custo.id != event.detail.id);
-    
+    custosExtras = custosExtras.filter((custo) => custo.id !== event.detail.id);
   }
 
   function calculaTotalAdicionais(event) {
-   
     let arr = event.detail.custosExtras;
-   
+
     if (arr.length == 0) {
       valorCustosAdicionais = 0;
-      
-    }else{
-    let total = 0;
+    } else {
+      let total = 0;
 
-    for (let i = 0; i < arr.length; i++) {
-      total += parseFloat(arr[i].valor);
-    }
-    valorCustosAdicionais = total;
+      for (let i = 0; i < arr.length; i++) {
+        total += parseFloat(arr[i].valor);
+      }
+      valorCustosAdicionais = total;
     }
   }
 
@@ -177,7 +174,7 @@
           {custosExtras}
           on:addCusto={adicionaCusto}
           on:removeCusto={removeCusto}
-          on:calculaTotal={calculaTotalAdicionais} 
+          on:calculaTotal={calculaTotalAdicionais}
         ></CustosExtras>
       </form>
     </div>
@@ -227,20 +224,29 @@
       display: block;
       text-align: center;
     }
+    .container:before, .container:after {
+            content: "";
+            display: table;
+         }
+         .container:after {
+            clear: both;
+         }
     .container {
-      display: block;
+        width: 99%;
+      display: table;
       position: inherit;
-      display: flex;
       flex-wrap: wrap;
       padding: 10px;
       align-items: baseline;
       padding-right: 20px;
       .form {
+        float: left;
+        width: 60%;
         background-color: #424242;
         border: 1px solid #4b4b4b;
         overflow: auto;
         position: relative;
-        margin-right: 100px;
+        
         padding: 10px;
         border-radius: 5px;
         .form-valores {
@@ -261,12 +267,14 @@
         }
       }
       .resultados {
+        position: fixed;
+        float: right;
+        width: 30%;
         border: 1px solid #ccc;
         background-color: #424242;
         border: 1px solid #4b4b4b;
         border-radius: 5px;
         padding: 10px;
-        max-width: 350px;
         flex: 1;
         align-items: center;
         right: 15px;
