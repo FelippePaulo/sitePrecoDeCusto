@@ -1,6 +1,6 @@
 <script>
   import CustosExtras from "./CustosExtras.svelte";
-  import Resultados from "./Resultados.svelte";
+  import Slider from "./slider.svelte";
   import { v4 as uuid } from "uuid";
   let tecidoCusto = 0.0;
   let taxaAproveitamento = 70;
@@ -96,6 +96,7 @@
               <td><input bind:value={tecidoCusto} type="text" /></td>
               <td
                 ><input
+                  class="slider"
                   bind:value={taxaAproveitamento}
                   type="range"
                   min="0"
@@ -224,15 +225,16 @@
       display: block;
       text-align: center;
     }
-    .container:before, .container:after {
-            content: "";
-            display: table;
-         }
-         .container:after {
-            clear: both;
-         }
+    .container:before,
+    .container:after {
+      content: "";
+      display: table;
+    }
+    .container:after {
+      clear: both;
+    }
     .container {
-        width: 99%;
+      width: 99%;
       display: table;
       position: inherit;
       flex-wrap: wrap;
@@ -242,19 +244,21 @@
       .form {
         float: left;
         width: 60%;
+        max-width: 605px;
         background-color: #424242;
         border: 1px solid #4b4b4b;
         overflow: auto;
         position: relative;
-        
+
         padding: 10px;
-        border-radius: 5px;
+        border-radius: 20px;
         .form-valores {
           background-color: #303030;
           margin-bottom: 10px;
           align-items: center;
           padding: 10px;
-          border-radius: 5px;
+          border-radius: 20px;
+          font-family: "Garamond", Times, serif;
         }
         input {
           flex: 1;
@@ -262,27 +266,41 @@
           border: 1px solid #4b4b4b;
           padding: 10px;
           color: white;
-          border-radius: 5px;
+          border-radius: 20px;
           margin-right: 10px;
         }
       }
+      $base-spacing-unit: 24px;
+      $half-spacing-unit: $base-spacing-unit / 2;
+
+      $color-alpha: #1772ff;
+      $color-form-highlight: #eeeeee;
       .resultados {
         position: fixed;
         float: right;
+        min-width: 350px;
         width: 30%;
         border: 1px solid #ccc;
         background-color: #424242;
         border: 1px solid #4b4b4b;
-        border-radius: 5px;
+        border-radius: 15px;
         padding: 10px;
         flex: 1;
         align-items: center;
         right: 15px;
+        font-family: "Garamond", Times, serif;
         div {
           background-color: #303030;
           padding: 10px;
           table {
-            border: solid 1px;
+            width: 100%;
+            border: 1px solid $color-form-highlight;
+            .table-header {
+                display: flex;
+                width: 100%;
+                background: #000;
+                padding: ($half-spacing-unit * 1.5) 0;
+            }
 
             td {
               padding: 10px;

@@ -1,6 +1,7 @@
 <script>
   import { v4 as uuid } from "uuid";
   import Button from "./Button.svelte";
+  // @ts-ignore
   import FaRegTrashAlt from "svelte-icons/fa/FaRegTrashAlt.svelte";
   import { afterUpdate, createEventDispatcher } from "svelte";
 
