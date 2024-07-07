@@ -184,7 +184,7 @@
         <h2>Resultados</h2>
         <table>
           <tr>
-            <td></td>
+            <td class="blank"></td>
             <td><h3>Infanto</h3></td>
             <td><h3>Normal</h3></td>
             <td><h3>PS</h3></td>
@@ -270,15 +270,10 @@
           margin-right: 10px;
         }
       }
-      $base-spacing-unit: 24px;
-      $half-spacing-unit: $base-spacing-unit / 2;
-
-      $color-alpha: #1772ff;
-      $color-form-highlight: #eeeeee;
       .resultados {
         position: fixed;
         float: right;
-        min-width: 350px;
+        min-width: 400px;
         width: 30%;
         border: 1px solid #ccc;
         background-color: #424242;
@@ -294,17 +289,21 @@
           padding: 10px;
           table {
             width: 100%;
-            border: 1px solid $color-form-highlight;
-            .table-header {
-                display: flex;
-                width: 100%;
-                background: #000;
-                padding: ($half-spacing-unit * 1.5) 0;
+          
+            tr{
+                background-color: #4b4b4b;
             }
-
+            tr:nth-of-type(even) {
+                background-color: #1a1919;
+            }
             td {
-              padding: 10px;
-              border: solid 1px;
+                
+                padding: 8px 10px;
+                min-width: 60px;
+              
+            }
+            .blank{
+                background-color: #303030;
             }
           }
         }
