@@ -8,6 +8,7 @@
   export let custosExtras = [];
   let inputNomeCustoExtra;
   let inputValorCustoExtra;
+  let input;
   const dispatch = createEventDispatcher();
 
   afterUpdate(() => {
@@ -23,6 +24,8 @@
       },
       { cancelable: true }
     );
+    clearInput();
+    focusInput();
   }
   function removeCusto(id) {
     dispatch(
@@ -37,6 +40,14 @@
     dispatch("calculaTotal", {
       custosExtras,
     });
+  }
+
+  function clearInput() {
+    inputNomeCustoExtra = "";
+    inputValorCustoExtra = "";
+  }
+  function focusInput() {
+    input.focus();
   }
 
   // function getTotalCustosExtras(){
@@ -82,7 +93,7 @@
           <td><h4>valor</h4></td>
         </tr>
         <tr>
-          <td><input type="text" bind:value={inputNomeCustoExtra} /></td>
+          <td><input type="text" bind:value={inputNomeCustoExtra} bind:this={input}/></td>
           <td><input type="number" bind:value={inputValorCustoExtra} /></td>
           <td
             ><Button
@@ -110,7 +121,7 @@
           display: flex;
           align-items: center;
           background-color: #303030;
-          border-radius: 5px;
+          border-radius: 20px;
           padding: 10px;
           position: relative;
           .remove-custoExtra-button {
@@ -118,6 +129,7 @@
             background: none;
             padding: 5px;
             position: absolute;
+            border-radius: 20px;
             right: 10px;
             cursor: pointer;
             display: none;
@@ -139,13 +151,14 @@
       display: flex;
       border-top: 1px solid #4b4b4b;
       flex-wrap: wrap;
+      border-radius: 20px;
       input {
         flex: 1;
         background-color: #424242;
         border: 1px solid #4b4b4b;
         padding: 10px;
         color: white;
-        border-radius: 5px;
+        border-radius: 20px;
         margin-right: 10px;
       }
     }

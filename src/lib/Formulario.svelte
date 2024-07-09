@@ -1,27 +1,43 @@
 <script>
   import CustosExtras from "./CustosExtras.svelte";
-  import Slider from "./slider.svelte";
   import { v4 as uuid } from "uuid";
-  let tecidoCusto = 0.0;
+  let tecidoCusto ;
   let taxaAproveitamento = 70;
-  let pesoInfanto = "";
-  let pesoNormal = "";
-  let pesoPS = "";
-  let tempoInfanto = "";
-  let tempoNormal = "";
-  let tempoPS = "";
-  let salario = "";
-  let cargaHoraria = "";
+  let pesoInfanto ;
+  let pesoNormal ;
+  let pesoPS ;
+  let tempoInfanto ;
+  let tempoNormal ;
+  let tempoPS ;
+  let salario ;
+  let cargaHoraria ;
   let impostoSalario = 40;
-  let contaLuz = "";
-  let contaAgua = "";
+  let contaLuz ;
+  let contaAgua ;
   let custosExtras = [];
-  let inputNomeCustoExtra;
-  let inputValorCustoExtra;
-  let valorCustosAdicionais = 0;
+  let valorCustosAdicionais ;
 
-  function calculaPrecoTecido(peso) {
+  function calculaPrecoTecido(peso, tecidoCusto, taxaAproveitamento) {
+    if(!peso || !tecidoCusto)
+        return 0;
     return (tecidoCusto * peso) / (taxaAproveitamento * 10);
+  }
+
+  function calculaSalarioPorHora(salario, cargaHoraria, imposto){
+    return (salario * (1 + (imposto/100)))/cargaHoraria 
+  }
+
+  function calculaCustoSalario(tempoGasto, custoFuncionarioPorHora){
+    if(!tempoGasto || !custoFuncionarioPorHora)
+        return 0;
+    return ((custoFuncionarioPorHora/60) * tempoGasto).toFixed(2)
+  }
+
+  function calculaCustoLuzEAgua(contaAgua,contaLuz,cargaHoraria,tempoGasto){
+    if(!contaAgua || !contaLuz || !cargaHoraria || !tempoGasto)
+        return 0;
+    
+    return ((((parseFloat(contaAgua) + parseFloat(contaLuz))/parseFloat(cargaHoraria))/60) * parseFloat(tempoGasto)).toFixed(2)
   }
 
   function adicionaCusto(event) {
@@ -34,8 +50,7 @@
         valor: event.detail.valor,
       },
     ];
-    inputNomeCustoExtra = "";
-    inputValorCustoExtra = "";
+    
   }
 
   function removeCusto(event) {
@@ -66,13 +81,13 @@
     custosExtras
   ) {
     return (
-      precoTecido +
-      precoMaoDeObra +
-      precoLuzAgua +
-      preçoEmbalagem +
-      preçoEtiqueta +
-      custosExtras
-    );
+      parseFloat(precoTecido) +
+      parseFloat(precoMaoDeObra) +
+      parseFloat(precoLuzAgua) +
+      parseFloat(preçoEmbalagem) +
+      parseFloat(preçoEtiqueta) +
+      parseFloat(custosExtras)
+    ).toFixed(2);
   }
 </script>
 
@@ -191,27 +206,56 @@
           </tr>
           <tr>
             <td><h3>Tecido</h3></td>
-            <td>{calculaPrecoTecido(pesoInfanto)}</td>
-            <td>{calculaPrecoTecido(pesoNormal)}</td>
-            <td>{calculaPrecoTecido(pesoPS)}</td>
+            <td>{calculaPrecoTecido(pesoInfanto, tecidoCusto, taxaAproveitamento)}</td>
+            <td>{calculaPrecoTecido(pesoNormal, tecidoCusto, taxaAproveitamento)}</td>
+            <td>{calculaPrecoTecido(pesoPS, tecidoCusto, taxaAproveitamento)}</td>
           </tr>
           <tr>
             <td><h3>Custos Adicionais</h3></td>
             <td>{valorCustosAdicionais}</td>
           </tr>
           <tr>
+            <td><h3>Salário</h3></td>
+            <td>{calculaCustoSalario(tempoInfanto, calculaSalarioPorHora(salario, cargaHoraria, impostoSalario))}</td>
+            <td>{calculaCustoSalario(tempoNormal, calculaSalarioPorHora(salario, cargaHoraria, impostoSalario))}</td>
+            <td>{calculaCustoSalario(tempoPS, calculaSalarioPorHora(salario, cargaHoraria, impostoSalario))}</td>
+          </tr>
+          <tr>
+            <td><h3>Luz e Água</h3></td>
+            <td>{calculaCustoLuzEAgua(contaAgua,contaLuz,cargaHoraria,tempoInfanto)}</td>
+            <td>{calculaCustoLuzEAgua(contaAgua,contaLuz,cargaHoraria,tempoNormal)}</td>
+            <td>{calculaCustoLuzEAgua(contaAgua,contaLuz,cargaHoraria,tempoPS)}</td>
+          </tr>
+          <tr>
             <td><h3>Total</h3></td>
             <td
               >{calculaPrecoTotal(
-                calculaPrecoTecido(pesoInfanto),
-                0,
-                0,
+                calculaPrecoTecido(pesoInfanto, tecidoCusto, taxaAproveitamento),
+                calculaCustoSalario(tempoInfanto, calculaSalarioPorHora(salario, cargaHoraria, impostoSalario)),
+                calculaCustoLuzEAgua(contaAgua,contaLuz,cargaHoraria,tempoInfanto),
                 0,
                 0,
                 valorCustosAdicionais
-              )}</td
-            >
-            <td></td>
+              )}
+            </td>
+            <td>{calculaPrecoTotal(
+                calculaPrecoTecido(pesoNormal, tecidoCusto, taxaAproveitamento),
+                calculaCustoSalario(tempoNormal, calculaSalarioPorHora(salario, cargaHoraria, impostoSalario)),
+                calculaCustoLuzEAgua(contaAgua,contaLuz,cargaHoraria,tempoNormal),
+                0,
+                0,
+                valorCustosAdicionais
+              )}
+            </td>
+            <td>{calculaPrecoTotal(
+                calculaPrecoTecido(pesoPS, tecidoCusto, taxaAproveitamento),
+                calculaCustoSalario(tempoPS, calculaSalarioPorHora(salario, cargaHoraria, impostoSalario)),
+                calculaCustoLuzEAgua(contaAgua,contaLuz,cargaHoraria,tempoNormal),
+                0,
+                0,
+                valorCustosAdicionais
+              )}
+            </td>
           </tr>
         </table>
       </div>
@@ -221,6 +265,7 @@
 
 <style lang="scss">
   body {
+    
     header {
       display: block;
       text-align: center;
@@ -236,20 +281,17 @@
     .container {
       width: 99%;
       display: table;
-      position: inherit;
       flex-wrap: wrap;
       padding: 10px;
-      align-items: baseline;
       padding-right: 20px;
       .form {
         float: left;
         width: 60%;
-        max-width: 605px;
+       
         background-color: #424242;
         border: 1px solid #4b4b4b;
         overflow: auto;
         position: relative;
-
         padding: 10px;
         border-radius: 20px;
         .form-valores {
@@ -261,6 +303,7 @@
           font-family: "Garamond", Times, serif;
         }
         input {
+          width: 85%;
           flex: 1;
           background-color: #424242;
           border: 1px solid #4b4b4b;
@@ -271,6 +314,7 @@
         }
       }
       .resultados {
+        text-align: center;
         position: fixed;
         float: right;
         min-width: 400px;
@@ -278,7 +322,7 @@
         border: 1px solid #ccc;
         background-color: #424242;
         border: 1px solid #4b4b4b;
-        border-radius: 15px;
+        border-radius: 20px;
         padding: 10px;
         flex: 1;
         align-items: center;
@@ -287,6 +331,7 @@
         div {
           background-color: #303030;
           padding: 10px;
+          border-radius: 20px;
           table {
             width: 100%;
           
