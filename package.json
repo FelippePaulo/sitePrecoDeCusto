@@ -13,6 +13,7 @@
     "@skeletonlabs/tw-plugin": "^0.4.0",
     "@sveltejs/vite-plugin-svelte": "^3.0.2",
     "sass": "^1.77.5",
+    "stwui": "^0.21.2-next",
     "svelte": "^4.2.12",
     "vite": "^5.1.6"
   },

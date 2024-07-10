@@ -1,5 +1,10 @@
 <script>
+// @ts-nocheck
+  import {Currency} from 'stwui';
   import CustosExtras from "./CustosExtras.svelte";
+  import RangeInput from "./RangeInput.svelte";
+  import DiGithubBadge from 'svelte-icons/di/DiGithubBadge.svelte'
+  import FaRegTrashAlt from "svelte-icons/fa/FaRegTrashAlt.svelte";
   import { v4 as uuid } from "uuid";
   let tecidoCusto ;
   let taxaAproveitamento = 70;
@@ -15,8 +20,8 @@
   let contaLuz ;
   let contaAgua ;
   let custosExtras = [];
-  let valorCustosAdicionais ;
-
+  let valorCustosAdicionais ; 
+  let value;
   function calculaPrecoTecido(peso, tecidoCusto, taxaAproveitamento) {
     if(!peso || !tecidoCusto)
         return 0;
@@ -29,13 +34,13 @@
 
   function calculaCustoSalario(tempoGasto, custoFuncionarioPorHora){
     if(!tempoGasto || !custoFuncionarioPorHora)
-        return 0;
+        return '0.00';
     return ((custoFuncionarioPorHora/60) * tempoGasto).toFixed(2)
   }
 
   function calculaCustoLuzEAgua(contaAgua,contaLuz,cargaHoraria,tempoGasto){
     if(!contaAgua || !contaLuz || !cargaHoraria || !tempoGasto)
-        return 0;
+        return '0.00';
     
     return ((((parseFloat(contaAgua) + parseFloat(contaLuz))/parseFloat(cargaHoraria))/60) * parseFloat(tempoGasto)).toFixed(2)
   }
@@ -61,7 +66,7 @@
     let arr = event.detail.custosExtras;
 
     if (arr.length == 0) {
-      valorCustosAdicionais = 0;
+      valorCustosAdicionais = '0.00';
     } else {
       let total = 0;
 
@@ -95,7 +100,7 @@
   <header>
     <h1>Calculo de preço de custo</h1>
   </header>
-  <div class="container">
+  <div class="grid-container">
     <ul></ul>
 
     <div class="form">
@@ -105,19 +110,17 @@
           <table>
             <tr>
               <td><h4>Preço por KG</h4></td>
-              <td><h4>Taxa de aproveitamento do tecido</h4></td>
+              <td><h4>Taxa de aproveitamento do tecido ({taxaAproveitamento} %)</h4></td>
             </tr>
             <tr>
-              <td><input bind:value={tecidoCusto} type="text" /></td>
-              <td
-                ><input
-                  class="slider"
-                  bind:value={taxaAproveitamento}
-                  type="range"
-                  min="0"
-                  max="100"
-                />{taxaAproveitamento}%</td
-              >
+              <td><Currency bind:value={tecidoCusto} type="text" /></td>
+              <td><div  class="slider-box">
+                <RangeInput on:change={(e) => value = e.detail.value} id="basic-slider" 
+                    bind:value={taxaAproveitamento}
+                    min = {0}
+                    max = {100}
+                    />
+            </div></td>
             </tr>
           </table>
         </div>
@@ -156,20 +159,20 @@
           <table>
             <tr>
               <td>Salário</td>
-              <td>Carga horaria</td>
-              <td>taxa de imposto</td>
+              <td>Carga horaria mensal</td>
+              <td>Taxa de imposto ({impostoSalario} %)</td>
             </tr>
             <tr>
-              <td><input bind:value={salario} type="text" /></td>
+              <td><Currency bind:value={salario} type="text" /></td>
               <td><input bind:value={cargaHoraria} type="text" /></td>
-              <td
-                ><input
-                  bind:value={impostoSalario}
-                  type="range"
-                  min="0"
-                  max="100"
-                />{impostoSalario}%</td
-              >
+              
+              <td><div class="slider-box">
+                <div class="slider">    
+                    <RangeInput on:change={(e) => value = e.detail.value} id="basic-slider" 
+                        bind:value={impostoSalario}
+                        min = {0}
+                        max = {100}
+                    />
             </tr>
           </table>
         </div>
@@ -178,11 +181,11 @@
           <table>
             <tr>
               <td>luz</td>
-              <td>Agua</td>
+              <td>Água</td>
             </tr>
             <tr>
-              <td><input bind:value={contaLuz} type="text" /></td>
-              <td><input bind:value={contaAgua} type="text" /></td>
+              <td><Currency bind:value={contaLuz} type="text" /></td>
+              <td><Currency bind:value={contaAgua} type="text" /></td>
             </tr>
           </table>
         </div>
@@ -206,30 +209,30 @@
           </tr>
           <tr>
             <td><h3>Tecido</h3></td>
-            <td>{calculaPrecoTecido(pesoInfanto, tecidoCusto, taxaAproveitamento)}</td>
-            <td>{calculaPrecoTecido(pesoNormal, tecidoCusto, taxaAproveitamento)}</td>
-            <td>{calculaPrecoTecido(pesoPS, tecidoCusto, taxaAproveitamento)}</td>
+            <td>R$ {calculaPrecoTecido(pesoInfanto, tecidoCusto, taxaAproveitamento).toFixed(2)}</td>
+            <td>R$ {calculaPrecoTecido(pesoNormal, tecidoCusto, taxaAproveitamento).toFixed(2)}</td>
+            <td>R$ {calculaPrecoTecido(pesoPS, tecidoCusto, taxaAproveitamento).toFixed(2)}</td>
           </tr>
           <tr>
             <td><h3>Custos Adicionais</h3></td>
-            <td>{valorCustosAdicionais}</td>
+            <td>R$ {valorCustosAdicionais}</td>
           </tr>
           <tr>
             <td><h3>Salário</h3></td>
-            <td>{calculaCustoSalario(tempoInfanto, calculaSalarioPorHora(salario, cargaHoraria, impostoSalario))}</td>
-            <td>{calculaCustoSalario(tempoNormal, calculaSalarioPorHora(salario, cargaHoraria, impostoSalario))}</td>
-            <td>{calculaCustoSalario(tempoPS, calculaSalarioPorHora(salario, cargaHoraria, impostoSalario))}</td>
+            <td>R$ {calculaCustoSalario(tempoInfanto, calculaSalarioPorHora(salario, cargaHoraria, impostoSalario))}</td>
+            <td>R$ {calculaCustoSalario(tempoNormal, calculaSalarioPorHora(salario, cargaHoraria, impostoSalario))}</td>
+            <td>R$ {calculaCustoSalario(tempoPS, calculaSalarioPorHora(salario, cargaHoraria, impostoSalario))}</td>
           </tr>
           <tr>
             <td><h3>Luz e Água</h3></td>
-            <td>{calculaCustoLuzEAgua(contaAgua,contaLuz,cargaHoraria,tempoInfanto)}</td>
-            <td>{calculaCustoLuzEAgua(contaAgua,contaLuz,cargaHoraria,tempoNormal)}</td>
-            <td>{calculaCustoLuzEAgua(contaAgua,contaLuz,cargaHoraria,tempoPS)}</td>
+            <td>R$ {calculaCustoLuzEAgua(contaAgua,contaLuz,cargaHoraria,tempoInfanto)}</td>
+            <td>R$ {calculaCustoLuzEAgua(contaAgua,contaLuz,cargaHoraria,tempoNormal)}</td>
+            <td>R$ {calculaCustoLuzEAgua(contaAgua,contaLuz,cargaHoraria,tempoPS)}</td>
           </tr>
           <tr>
             <td><h3>Total</h3></td>
             <td
-              >{calculaPrecoTotal(
+              >R$ {calculaPrecoTotal(
                 calculaPrecoTecido(pesoInfanto, tecidoCusto, taxaAproveitamento),
                 calculaCustoSalario(tempoInfanto, calculaSalarioPorHora(salario, cargaHoraria, impostoSalario)),
                 calculaCustoLuzEAgua(contaAgua,contaLuz,cargaHoraria,tempoInfanto),
@@ -238,7 +241,7 @@
                 valorCustosAdicionais
               )}
             </td>
-            <td>{calculaPrecoTotal(
+            <td>R$ {calculaPrecoTotal(
                 calculaPrecoTecido(pesoNormal, tecidoCusto, taxaAproveitamento),
                 calculaCustoSalario(tempoNormal, calculaSalarioPorHora(salario, cargaHoraria, impostoSalario)),
                 calculaCustoLuzEAgua(contaAgua,contaLuz,cargaHoraria,tempoNormal),
@@ -247,7 +250,7 @@
                 valorCustosAdicionais
               )}
             </td>
-            <td>{calculaPrecoTotal(
+            <td>R$ {calculaPrecoTotal(
                 calculaPrecoTecido(pesoPS, tecidoCusto, taxaAproveitamento),
                 calculaCustoSalario(tempoPS, calculaSalarioPorHora(salario, cargaHoraria, impostoSalario)),
                 calculaCustoLuzEAgua(contaAgua,contaLuz,cargaHoraria,tempoNormal),
@@ -260,56 +263,61 @@
         </table>
       </div>
     </div>
+    <footer>
+        <p class="footer-text">@copyright</p>
+        <div class="links">
+            <a href="https://github.com/FelippePaulo" target="_blank">
+                <button class="footer-link">
+                    <img src="src\assets\github.png" alt="#">
+                </button>
+            </a>
+        </div>
+       
+    </footer>
   </div>
 </body>
 
 <style lang="scss">
+   
   body {
     margin: 0;
     font-family:     sans-serif, Times, serif;
+    //font-family: "Garamond", Times, serif;
     header {
-        position: static;
+      grid-area: header;
       background-color: #202020;
       padding: 10px;
       margin-top: 10px;
       text-align: center;
     }
-    .container:before,
-    .container:after {
-      content: "";
-      display: table;
-    }
-    .container:after {
-      clear: both;
-    }
-    .container {
+    
+    .grid-container {
       width: 99%;
-      display: table;
+      display: grid;
+      grid-template-areas: 'header header'
+                            'form result'
+                            'footer footer';
       flex-wrap: wrap;
       padding: 10px;
       padding-right: 20px;
-    
+      justify-items: center;
+   
       .form {
-        float: left;
-        margin-left: 15%;
-        width: 60%;
         max-width: 650px;
-        
+        grid-area: form;
         background-color:  rgba(0,0,0,.3);
         border: 0px;
         overflow: auto;
-        position: relative;
+        // position: relative;
         padding: 10px;
         border-radius: 20px;
         .form-valores {
           background-color: #303030;
           margin-bottom: 10px;
-          align-items: center;
           padding: 10px;
           border-radius: 20px;
-          font-family:  sans-serif,Times, serif;
         }
-        input {
+        :global(input){
           width: 85%;
           flex: 1;
           background-color: #424242;
@@ -319,20 +327,22 @@
           border-radius: 20px;
           margin-right: 10px;
         }
+        .slider-box{
+            width: 200px;
+            margin-left: 0px;
+        }
       }
       .resultados {
         text-align: center;
-        float: right;
+        grid-area: result;
         min-width: 400px;
+        max-height: 570px;
         width: 30%;
         border: 1px solid #ccc;
         background-color:  rgba(0,0,0,.3);
         border: 0px solid #4b4b4b;
         border-radius: 20px;
         padding: 10px;
-        flex: 1;
-        align-items: center;
-        right: 15px;
         font-family: "Garamond", Times, serif;
         div {
           background-color: #303030;
@@ -357,6 +367,38 @@
                 background-color: #303030;
             }
           }
+        }
+      }
+      footer{
+        text-align: center;
+        grid-area: footer;
+        height: 100px;
+        margin-top: 20px;
+        width: 100%;
+        //border-top: solid 1px;
+        background-color:  rgba(0,0,0,.1);
+        display: grid;
+        grid-template-areas: 'texto links';
+        .footer-text{
+            grid-area: texto;
+            margin-top: 35px;
+        }
+        .links{
+            grid-area: links;
+            margin-top: 25px;
+        }
+        a .footer-link{
+            background: transparent !important;
+            position: relative;
+            cursor: pointer;
+            border: 0px;
+             img{
+                width: 50px;
+            }
+            
+        }
+        .footer-link:hover{
+            transform: scale(1.2);
         }
       }
     }

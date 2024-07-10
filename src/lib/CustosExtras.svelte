@@ -1,6 +1,9 @@
 <script>
+// @ts-nocheck
+
   import { v4 as uuid } from "uuid";
   import Button from "./Button.svelte";
+  import {Currency} from 'stwui';
   // @ts-ignore
   import FaRegTrashAlt from "svelte-icons/fa/FaRegTrashAlt.svelte";
   import { afterUpdate, createEventDispatcher } from "svelte";
@@ -67,7 +70,7 @@
       <ul>
         {#each custosExtras as { id, nome, valor }}
           <li>
-            {nome} - {valor}
+            {nome} - R$ {valor}
             <button
               class="remove-custoExtra-button"
               aria-label="Remover custo: {nome}"
@@ -94,11 +97,12 @@
         </tr>
         <tr>
           <td><input type="text" bind:value={inputNomeCustoExtra} bind:this={input}/></td>
-          <td><input type="number" bind:value={inputValorCustoExtra} /></td>
+          <td><Currency bind:value={inputValorCustoExtra} /></td>
           <td
             ><Button
               class="add-custo-button"
               type="submit"
+              bgColor = "blue"
               disabled={!inputValorCustoExtra || !inputNomeCustoExtra}
               >adicionar</Button
             ></td
