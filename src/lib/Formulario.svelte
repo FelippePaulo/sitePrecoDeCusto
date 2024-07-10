@@ -265,9 +265,13 @@
 
 <style lang="scss">
   body {
-    
+    margin: 0;
+    font-family:     sans-serif, Times, serif;
     header {
-      display: block;
+        position: static;
+      background-color: #202020;
+      padding: 10px;
+      margin-top: 10px;
       text-align: center;
     }
     .container:before,
@@ -284,12 +288,15 @@
       flex-wrap: wrap;
       padding: 10px;
       padding-right: 20px;
+    
       .form {
         float: left;
+        margin-left: 15%;
         width: 60%;
-       
-        background-color: #424242;
-        border: 1px solid #4b4b4b;
+        max-width: 650px;
+        
+        background-color:  rgba(0,0,0,.3);
+        border: 0px;
         overflow: auto;
         position: relative;
         padding: 10px;
@@ -300,7 +307,7 @@
           align-items: center;
           padding: 10px;
           border-radius: 20px;
-          font-family: "Garamond", Times, serif;
+          font-family:  sans-serif,Times, serif;
         }
         input {
           width: 85%;
@@ -315,13 +322,12 @@
       }
       .resultados {
         text-align: center;
-        position: fixed;
         float: right;
         min-width: 400px;
         width: 30%;
         border: 1px solid #ccc;
-        background-color: #424242;
-        border: 1px solid #4b4b4b;
+        background-color:  rgba(0,0,0,.3);
+        border: 0px solid #4b4b4b;
         border-radius: 20px;
         padding: 10px;
         flex: 1;
