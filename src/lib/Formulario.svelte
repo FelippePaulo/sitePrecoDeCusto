@@ -97,9 +97,7 @@
 </script>
 
 <body>
-  <header>
-    <h1>Calculo de preço de custo</h1>
-  </header>
+  
   <div class="grid-container">
     <ul></ul>
 
@@ -107,87 +105,70 @@
       <form action="">
         <div class="form-valores">
           <h2>Tecido</h2>
-          <table>
-            <tr>
-              <td><h4>Preço por KG</h4></td>
-              <td><h4>Taxa de aproveitamento do tecido ({taxaAproveitamento} %)</h4></td>
-            </tr>
-            <tr>
-              <td><Currency bind:value={tecidoCusto} type="text" /></td>
-              <td><div  class="slider-box">
+          
+              <div class="td1">Preço por KG</div>
+              <div class="td2">Taxa de aproveitamento do tecido ({taxaAproveitamento} %)</div>
+            
+              <div class="inp1"><Currency bind:value={tecidoCusto} type="text" /></div>
+              <div class="inp2"><div  class="slider-box">
                 <RangeInput on:change={(e) => value = e.detail.value} id="basic-slider" 
                     bind:value={taxaAproveitamento}
                     min = {0}
                     max = {100}
                     />
-            </div></td>
-            </tr>
-          </table>
+            </div></div>
+            
         </div>
         <div class="form-valores">
           <h2>Peso por peça (g)</h2>
-          <table>
-            <tr>
-              <td>Infanto</td>
-              <td>Normal</td>
-              <td>PS</td>
-            </tr>
-            <tr>
-              <td><input bind:value={pesoInfanto} type="text" /></td>
-              <td><input bind:value={pesoNormal} type="text" /></td>
-              <td><input bind:value={pesoPS} type="text" /></td>
-            </tr>
-          </table>
+              <div class="td1">Infanto</div>
+              <div class="td2">Normal</div>
+              <div class="td3">PS</div>
+           
+              <div class="inp1"><input bind:value={pesoInfanto} type="text" /></div>
+              <div class="inp2"><input bind:value={pesoNormal} type="text" /></div>
+              <div class="inp3"><input bind:value={pesoPS} type="text" /></div>
         </div>
         <div class="form-valores">
           <h2>Tempo gasto por peça em minutos</h2>
-          <table>
-            <tr>
-              <td>Infanto</td>
-              <td>Normal</td>
-              <td>PS</td>
-            </tr>
-            <tr>
-              <td><input bind:value={tempoInfanto} type="text" /></td>
-              <td><input bind:value={tempoNormal} type="text" /></td>
-              <td><input bind:value={tempoPS} type="text" /></td>
-            </tr>
-          </table>
+              <div class="td1">Infanto</div>
+              <div class="td2">Normal</div>
+              <div class="td3">PS</div>
+            
+              <div class="inp1"><input bind:value={tempoInfanto} type="text" /></div>
+              <div class="inp2"><input bind:value={tempoNormal} type="text" /></div>
+              <div class="inp3"><input bind:value={tempoPS} type="text" /></div>
+          
         </div>
         <div class="form-valores">
           <h2>Salário dos funcionarios</h2>
-          <table>
-            <tr>
-              <td>Salário</td>
-              <td>Carga horaria mensal</td>
-              <td>Taxa de imposto ({impostoSalario} %)</td>
-            </tr>
-            <tr>
-              <td><Currency bind:value={salario} type="text" /></td>
-              <td><input bind:value={cargaHoraria} type="text" /></td>
+              <div class="td1">Salário</div>
+              <div class="td2">Carga horaria mensal</div>
+              <div class="td3">Taxa de imposto ({impostoSalario} %)</div>
+            
+              <div class="inp1"><Currency bind:value={salario} type="text" /></div>
+              <div class="inp2"><input bind:value={cargaHoraria} type="text" /></div>
               
-              <td><div class="slider-box">
-                <div class="slider">    
-                    <RangeInput on:change={(e) => value = e.detail.value} id="basic-slider" 
-                        bind:value={impostoSalario}
-                        min = {0}
-                        max = {100}
-                    />
-            </tr>
-          </table>
+              <div class="inp3">
+                <div class="slider-box">
+                    <div class="slider">    
+                        <RangeInput on:change={(e) => value = e.detail.value} id="basic-slider" 
+                            bind:value={impostoSalario}
+                            min = {0}
+                            max = {100}
+                        />
+                </div>
+                </div>
+              </div>
         </div>
         <div class="form-valores">
           <h2>Contas</h2>
-          <table>
-            <tr>
-              <td>luz</td>
-              <td>Água</td>
-            </tr>
-            <tr>
-              <td><Currency bind:value={contaLuz} type="text" /></td>
-              <td><Currency bind:value={contaAgua} type="text" /></td>
-            </tr>
-          </table>
+              <div class="td1">luz</div>
+              <div class="td2">Água</div>
+            
+              <div class="inp1"><Currency bind:value={contaLuz} type="text" /></div>
+              <div class="inp2"><Currency bind:value={contaAgua} type="text" /></div>
+           
         </div>
         <CustosExtras
           {custosExtras}
@@ -263,17 +244,6 @@
         </table>
       </div>
     </div>
-    <footer>
-        <p class="footer-text">@copyright</p>
-        <div class="links">
-            <a href="https://github.com/FelippePaulo" target="_blank">
-                <button class="footer-link">
-                    <img src="src\assets\github.png" alt="#">
-                </button>
-            </a>
-        </div>
-       
-    </footer>
   </div>
 </body>
 
@@ -283,20 +253,12 @@
     margin: 0;
     font-family:     sans-serif, Times, serif;
     //font-family: "Garamond", Times, serif;
-    header {
-      grid-area: header;
-      background-color: #202020;
-      padding: 10px;
-      margin-top: 10px;
-      text-align: center;
-    }
+    
     
     .grid-container {
       width: 99%;
       display: grid;
-      grid-template-areas: 'header header'
-                            'form result'
-                            'footer footer';
+      grid-template-areas: 'form result';
       flex-wrap: wrap;
       padding: 10px;
       padding-right: 20px;
@@ -316,7 +278,34 @@
           margin-bottom: 10px;
           padding: 10px;
           border-radius: 20px;
+          display: grid;
+          grid-template-areas:'title title title'
+                            'td1 td2 td3'
+                            'inp1 inp2 inp3'
+                                ;
+            h2{
+                grid-area: title;
+            }
+            .td1{
+                grid-area: td1;
+            }
+            .td2{
+                grid-area: td2;
+            }
+            .td3{
+                grid-area: td3;
+            }
+            .inp1{
+                grid-area: inp1;
+            }
+            .inp2{
+                grid-area: inp2;
+            }
+            .inp3{
+                grid-area: inp3;
+            }
         }
+       
         :global(input){
           width: 85%;
           flex: 1;
@@ -336,7 +325,7 @@
         text-align: center;
         grid-area: result;
         min-width: 400px;
-        max-height: 570px;
+        max-height: 465px;
         width: 30%;
         border: 1px solid #ccc;
         background-color:  rgba(0,0,0,.3);
@@ -356,7 +345,7 @@
             }
             tr:nth-of-type(even) {
                 background-color: #1a1919;
-            }
+            }http://localhost:5173/
             td {
                 
                 padding: 8px 10px;
@@ -369,38 +358,53 @@
           }
         }
       }
-      footer{
-        text-align: center;
-        grid-area: footer;
-        height: 100px;
-        margin-top: 20px;
-        width: 100%;
-        //border-top: solid 1px;
-        background-color:  rgba(0,0,0,.1);
-        display: grid;
-        grid-template-areas: 'texto links';
-        .footer-text{
-            grid-area: texto;
-            margin-top: 35px;
-        }
-        .links{
-            grid-area: links;
-            margin-top: 25px;
-        }
-        a .footer-link{
-            background: transparent !important;
-            position: relative;
-            cursor: pointer;
-            border: 0px;
-             img{
-                width: 50px;
-            }
+      
+    }
+  }
+  @media (max-width: 1000px) {
+    body{
+        .grid-container{
+        grid-template-areas: 'form'
+                            'result';
+            .form{
+                width: 95%;
+                min-width: 50px;
+                .form-valores{
+                    min-width: 0px;
+                    display: grid;
+                    grid-template-areas:'title'
+                                        'td1'
+                                        'inp1'
+                                        'td2'
+                                        'inp2'
+                                        'td3'
+                                        'inp3';
+                    
+                }
+                .form-valores div {
+                    margin-top: 10px;
+                    
+                }
+                .slider-box{
+                    width: 200px;
+                    margin-left: 0px;
+                    justify-content: top;
+                }
+                :global(input){
+                    width: 95%;
+                }
+            
+
             
         }
-        .footer-link:hover{
-            transform: scale(1.2);
+        .resultados{
+            margin-top: 30px;
+            width: 95%;
+            max-width: 650px;
         }
-      }
+        }
+        
     }
+   
   }
 </style>
