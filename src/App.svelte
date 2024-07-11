@@ -30,7 +30,7 @@
             grid-area: header;
             background-color: #202020;
             padding: 10px;
-            
+            margin: 0px;
             text-align: center;
         }
 
