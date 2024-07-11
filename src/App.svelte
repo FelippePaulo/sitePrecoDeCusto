@@ -30,12 +30,13 @@
             grid-area: header;
             background-color: #202020;
             padding: 10px;
-            margin-top: 10px;
+            
             text-align: center;
         }
 
         .calculo-form{
             grid-area: form;
+            margin-left: 0px;
         }
 
         footer{

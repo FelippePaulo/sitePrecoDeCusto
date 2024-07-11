@@ -90,25 +90,21 @@
       action=""
       on:submit|preventDefault={adicionaCusto}
     >
-      <table>
-        <tr>
-          <td><h4>nome</h4></td>
-          <td><h4>valor</h4></td>
-        </tr>
-        <tr>
-          <td><input type="text" bind:value={inputNomeCustoExtra} bind:this={input}/></td>
-          <td><Currency bind:value={inputValorCustoExtra} /></td>
-          <td
+      
+          <div class="td1">nome</div>
+          <div class="td2">valor</div>
+        
+          <div class="inp1"><input type="text" bind:value={inputNomeCustoExtra} bind:this={input}/></div>
+          <div class="inp2"><Currency bind:value={inputValorCustoExtra} /></div>
+          <div class="inp3"
             ><Button
               class="add-custo-button"
               type="submit"
               bgColor = "blue"
               disabled={!inputValorCustoExtra || !inputNomeCustoExtra}
               >adicionar</Button
-            ></td
-          >
-        </tr>
-      </table>
+            ></div>
+   
     </form>
   </div>
 </div>
@@ -152,10 +148,33 @@
     .add-custosExtras-form {
       padding: 15px;
       background-color: #303030;
-      display: flex;
+      display: grid;
       border-top: 1px solid #4b4b4b;
       flex-wrap: wrap;
       border-radius: 20px;
+      grid-template-areas:
+            "title title title"
+            "td1 td2 td3"
+            "inp1 inp2 inp3";
+         
+          .td1 {
+            grid-area: td1;
+          }
+          .td2 {
+            grid-area: td2;
+          }
+          .td3 {
+            grid-area: td3;
+          }
+          .inp1 {
+            grid-area: inp1;
+          }
+          .inp2 {
+            grid-area: inp2;
+          }
+          .inp3 {
+            grid-area: inp3;
+          }
       input {
         flex: 1;
         background-color: #424242;
@@ -170,4 +189,21 @@
       background-color: rgb(255, 51, 0);
     }
   }
+  @media (max-width: 1000px){
+    .custosExtras-list-wrapper{
+        .add-custosExtras-form{
+            
+            grid-template-areas:
+              "td1"
+              "inp1"
+              "td2"
+              "inp2"
+              "td3"
+              "inp3";
+            div{
+                margin-top: 10px;
+            }
+        }
+    }
+}
 </style>

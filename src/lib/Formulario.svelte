@@ -69,7 +69,6 @@
 
   function calculaCustoLuzEAgua(contaAgua, contaLuz, cargaHoraria, tempoGasto) {
     if (!contaAgua || !contaLuz || !cargaHoraria || !tempoGasto) return "0.00";
-    console.log(contaAgua, contaLuz, cargaHoraria, tempoGasto);
     return (
       ((parseFloat(contaAgua) + parseFloat(contaLuz)) /
         parseFloat(cargaHoraria) /
@@ -402,6 +401,7 @@
 </body>
 
 <style lang="scss">
+    
   body {
     margin: 0;
     font-family: sans-serif, Times, serif;
@@ -417,6 +417,7 @@
       justify-items: center;
 
       .form {
+        
         max-width: 650px;
         grid-area: form;
         background-color: rgba(0, 0, 0, 0.3);
@@ -472,13 +473,14 @@
         .slider-box {
           width: 200px;
           margin-left: 0px;
+          margin-top: 13px;
         }
       }
       .resultados {
         text-align: center;
         grid-area: result;
         min-width: 400px;
-        max-height: 465px;
+        max-height: 570px;
         width: 30%;
         border: 1px solid #ccc;
         background-color: rgba(0, 0, 0, 0.3);
@@ -499,7 +501,6 @@
             tr:nth-of-type(even) {
               background-color: #1a1919;
             }
-            http://localhost:5173/
               td {
               padding: 8px 10px;
               min-width: 60px;
@@ -518,9 +519,11 @@
         grid-template-areas:
           "form"
           "result";
+        padding: 0px;
         .form {
           width: 95%;
           min-width: 50px;
+         
           .form-valores {
             min-width: 0px;
             display: grid;
@@ -553,4 +556,16 @@
       }
     }
   }
+  @media (max-width: 400px){
+    body{
+        .grid-container{
+            width: 95%;
+            .form{
+                display: flex;
+                width: 95% ;
+            }
+        }
+    }
+  }
+  
 </style>
