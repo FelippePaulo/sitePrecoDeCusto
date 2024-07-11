@@ -52,7 +52,7 @@
   });
 
   function calculaPrecoTecido(peso, tecidoCusto, taxaAproveitamento) {
-    if (!peso || !tecidoCusto) return 0;
+    if (!peso || !tecidoCusto || !taxaAproveitamento) return 0;
     return (tecidoCusto * peso) / (taxaAproveitamento * 10);
   }
 

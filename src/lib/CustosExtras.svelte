@@ -91,8 +91,8 @@
       on:submit|preventDefault={adicionaCusto}
     >
       
-          <div class="td1">nome</div>
-          <div class="td2">valor</div>
+          <div class="td1">Nome</div>
+          <div class="td2">Valor</div>
         
           <div class="inp1"><input type="text" bind:value={inputNomeCustoExtra} bind:this={input}/></div>
           <div class="inp2"><Currency bind:value={inputValorCustoExtra} /></div>
