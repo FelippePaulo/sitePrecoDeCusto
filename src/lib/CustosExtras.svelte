@@ -163,9 +163,6 @@
           .td2 {
             grid-area: td2;
           }
-          .td3 {
-            grid-area: td3;
-          }
           .inp1 {
             grid-area: inp1;
           }
