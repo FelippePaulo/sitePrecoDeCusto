@@ -408,6 +408,7 @@
     //font-family: "Garamond", Times, serif;
 
     .grid-container {
+      margin-top: 20px;
       width: 99%;
       display: grid;
       grid-template-areas: "form result";
@@ -479,31 +480,36 @@
       .resultados {
         text-align: center;
         grid-area: result;
-        min-width: 400px;
-        max-height: 570px;
-        width: 30%;
+        height: max-content;
+        max-width: 340px;
         border: 1px solid #ccc;
         background-color: rgba(0, 0, 0, 0.3);
         border: 0px solid #4b4b4b;
         border-radius: 20px;
         padding: 10px;
         font-family: "Garamond", Times, serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         div {
+          max-width: 93%;
+          max-height: 93%;
           background-color: #303030;
           padding: 10px;
           border-radius: 20px;
           table {
-            width: 100%;
-
             tr {
               background-color: #4b4b4b;
+              
             }
             tr:nth-of-type(even) {
               background-color: #1a1919;
             }
               td {
-              padding: 8px 10px;
-              min-width: 60px;
+              padding: 0px 5px 0px 5px !important;
+              width: 60px;
+              min-width: 30px;
+              padding:5px;
             }
             .blank {
               background-color: #303030;
@@ -550,7 +556,6 @@
         }
         .resultados {
           margin-top: 30px;
-          width: 95%;
           max-width: 650px;
         }
       }
@@ -558,7 +563,11 @@
   }
   @media (max-width: 400px){
     body{
+      display: flex;
+      align-items: center;
+      justify-content: center;
         .grid-container{
+            margin: 5px;
             width: 95%;
             .form{
                 display: flex;
